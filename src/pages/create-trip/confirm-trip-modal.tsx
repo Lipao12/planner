@@ -4,6 +4,8 @@ import { CustomButton } from "../../ui/componets/CustomButton";
 interface ConfirmTripModalProps {
   closeConfirmTripModal: () => void;
   createTrip: (event: FormEvent<HTMLFormElement>) => void;
+  setOwnerName: (name: string) => void;
+  setOwnerEmail: (email: string) => void;
 }
 
 export function ConfitmTripModal(props: ConfirmTripModalProps) {
@@ -16,6 +18,7 @@ export function ConfitmTripModal(props: ConfirmTripModalProps) {
               Confirmar criação de viajem
             </h2>
             <button type="button" onClick={props.closeConfirmTripModal}>
+              {""}
               <X className="size-5 text-zinc-400" />
             </button>
           </div>
@@ -35,6 +38,7 @@ export function ConfitmTripModal(props: ConfirmTripModalProps) {
               name="name"
               placeholder="Seu nome completo"
               className="bg-transparent text-lg placeholder-zinc-400 outline-none flex-1"
+              onChange={(event) => props.setOwnerName(event.target.value)}
             />
           </div>
           <div className="h-14 px-5 bg-zinc-950 border border-zinc-800 rounded-lg flex items-center gap-2">
@@ -44,6 +48,7 @@ export function ConfitmTripModal(props: ConfirmTripModalProps) {
               name="email"
               placeholder="Seu e-mail pessoal"
               className="bg-transparent text-lg placeholder-zinc-400 outline-none flex-1"
+              onChange={(event) => props.setOwnerEmail(event.target.value)}
             />
           </div>
 
