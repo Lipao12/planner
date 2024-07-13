@@ -1,16 +1,19 @@
-import { Calendar, MapPin, Plus, Settings2 } from "lucide-react";
+import { Plus } from "lucide-react";
 import { useState } from "react";
-import { Divider } from "../../ui/componets/Divider";
 import { Activities } from "./activities";
-import { CreateActivityModal } from "./create-activity-modal";
+import { DestinationDateHeader } from "./dest-and-date-header";
 import { Guests } from "./guests";
 import { ImportantLinks } from "./important-links";
-import { DestinationDateHeader } from "./dest-and-date-header";
+import { CreateActivityModal } from "./modals/create-activity-modal";
+import { CreateLinkModal } from "./modals/create-link-modal";
+import { ManageGuestsModal } from "./modals/manage-guests-modal";
 
 export function TripDetailsPage() {
   const [isCreateActivityModalOpen, setCreateActivityModalOpen] =
     useState(false);
-  const [activities, setActivities] = useState([]);
+  const [isCreateLinkModalOpen, setIsCreateLinkModalOpen] = useState(false);
+  const [isManageGuestsModalOpen, setIsManageGuestsModalOpen] = useState(false);
+  const [isChangeDateAble, setIsChangeDateAble] = useState(false);
 
   const openActivityModal = () => {
     setCreateActivityModalOpen(true);
@@ -20,9 +23,39 @@ export function TripDetailsPage() {
     setCreateActivityModalOpen(false);
   };
 
+  const openLinkModal = () => {
+    setIsCreateLinkModalOpen(true);
+  };
+
+  const closeLinkModal = () => {
+    setIsCreateLinkModalOpen(false);
+  };
+
+  const openManageGuestsModal = () => {
+    setIsManageGuestsModalOpen(true);
+  };
+
+  const closeManageGuestsModal = () => {
+    setIsManageGuestsModalOpen(false);
+  };
+
+  const ableChangeDate = () => {
+    setIsChangeDateAble(true);
+  };
+
+  const disableChangeDate = () => {
+    setIsChangeDateAble(false);
+  };
+
+  console.log("Create Link: ", isCreateLinkModalOpen);
+
   return (
     <div className="max-w-6xl px-6 py-10 mx-auto space-y-8">
-      <DestinationDateHeader />
+      <DestinationDateHeader
+        isChangeDateAble={isChangeDateAble}
+        ableChangeDate={ableChangeDate}
+        disableChangeDate={disableChangeDate}
+      />
 
       <main className="flex gap-16 px-4">
         <div className="flex-1 space-y-6">
@@ -41,16 +74,24 @@ export function TripDetailsPage() {
         </div>
 
         <div className="w-80 space-y-6">
-          <ImportantLinks />
+          <ImportantLinks openLinkModal={openLinkModal} />
 
           <div className="w-full h-px bg-zinc-800" />
 
-          <Guests />
+          <Guests openManageGuestsModal={openManageGuestsModal} />
         </div>
       </main>
 
       {isCreateActivityModalOpen && (
         <CreateActivityModal closeActivityModal={closeActivityModal} />
+      )}
+
+      {isCreateLinkModalOpen && (
+        <CreateLinkModal closeLinkModal={closeLinkModal} />
+      )}
+
+      {isManageGuestsModalOpen && (
+        <ManageGuestsModal closeManageGuestsModal={closeManageGuestsModal} />
       )}
     </div>
   );

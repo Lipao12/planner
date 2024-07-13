@@ -54,9 +54,11 @@ export function DestinationDateStep({
       </div>
       <button
         onClick={openDatePicker}
+        type="button"
         className="flex items-center gap-2 text-left"
         disabled={isGuestsInputOpen}
       >
+        {""}
         <Calendar className="size-5 text-zinc-400" />
         <span className=" text-lg text-zinc-400  flex-1">
           {eventStartEndDate ? displayedDate : "Quando?"}
@@ -79,6 +81,9 @@ export function DestinationDateStep({
               mode="range"
               selected={eventStartEndDate}
               onSelect={setEventStartEndDate}
+              disabled={{
+                before: new Date(),
+              }}
             />
           </div>
         </div>

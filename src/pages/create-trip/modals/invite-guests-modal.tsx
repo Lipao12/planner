@@ -1,5 +1,6 @@
 import { AtSign, Plus, X } from "lucide-react";
-import { CustomButton } from "../../ui/componets/CustomButton";
+import { FormEvent } from "react";
+import { CustomButton } from "../../../ui/componets/CustomButton";
 
 interface InviteGuestsModalProps {
   closeGuestsModal: () => void;
@@ -16,6 +17,7 @@ export function InviteGuestsModal(props: InviteGuestsModalProps) {
           <div className="flex items-center justify-between">
             <h2 className="text-lg font-semibold">Selecionar convidados</h2>
             <button type="button" onClick={props.closeGuestsModal}>
+              {""}
               <X className="size-5 text-zinc-400" />
             </button>
           </div>
@@ -39,6 +41,7 @@ export function InviteGuestsModal(props: InviteGuestsModalProps) {
                     props.removeEmail(email);
                   }}
                 >
+                  {""}
                   <X className="size-4 text-zinc-400" />
                 </button>
               </div>
