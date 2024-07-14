@@ -12,7 +12,7 @@ class ActivitiesRepository:
             INSERT INTO activities
                 (id, trip_id, title, occurs_at)
             VALUES
-                (%s, %s, %s)
+                (%s, %s, %s, %s)
             ''',
             (
                 activity_trip_info["id"],

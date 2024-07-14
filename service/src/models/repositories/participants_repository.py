@@ -44,7 +44,7 @@ class ParticipantsRepository:
         cursor = self.conn.cursor()
         cursor.execute(
             '''
-            UPDATE participanst 
+            UPDATE participants 
                 SET is_confirmed = 1
             WHERE id = %s
             ''',
