@@ -1,6 +1,5 @@
 import pytest # tyoe: ignore
 import uuid 
-from datetime import datetime, timedelta
 from .emails_to_invite_repository import EmailToInviteRepository
 from src.models.settings.db_connection_handler import db_connection_handler
 
