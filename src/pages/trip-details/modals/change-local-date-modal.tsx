@@ -45,24 +45,24 @@ export function ChangeLocalDateModal({
     console.log(inputValue);
 
     const destination = inputValue || tripDestination || "";
-    const starts_at = eventStartEndDate?.from;
-    const ends_at = eventStartEndDate?.to;
+    const start_date = eventStartEndDate?.from;
+    const end_date = eventStartEndDate?.to;
 
     console.log("Desti:", destination);
 
     try {
-      await api.put(`/trips/${tripId}`, {
+      await api.patch(`/trips/${tripId}`, {
         destination,
-        starts_at,
-        ends_at,
+        start_date,
+        end_date,
       });
       console.log("Local atualizado");
-      window.document.location.reload(); // nao eh a melhor forma de mostrar quando uma atividade é criada e enviada pela API, procurar uma forma melhor
     } catch (err: any) {
       console.log(err);
       console.log(err.response?.data?.errors);
     } finally {
       console.log("Finalizando requisição");
+      //window.document.location.reload(); // nao eh a melhor forma de mostrar quando uma atividade é criada e enviada pela API, procurar uma forma melhor
     }
   };
 

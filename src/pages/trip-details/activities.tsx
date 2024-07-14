@@ -19,9 +19,9 @@ export function Activities() {
   const [activities, setActivities] = useState<Activity[] | undefined>();
 
   useEffect(() => {
-    api
-      .get(`/trips/${tripId}/activities`)
-      .then((response) => setActivities(response.data.activities));
+    api.get(`/trips/${tripId}/activities`).then((response) => {
+      setActivities(response.data.activities);
+    });
   }, [tripId]);
 
   return (

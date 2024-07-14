@@ -1,4 +1,5 @@
 from flask import jsonify, Blueprint, request
+from src.drivers.email_sender import send_email 
 
 trips_routes_bp = Blueprint("trip_routes", __name__)
 
@@ -6,6 +7,7 @@ trips_routes_bp = Blueprint("trip_routes", __name__)
 from src.controllers.trip_creator import TripCreator
 from src.controllers.trip_finder import TripFinder
 from src.controllers.trip_confirmer import TripConfirmer
+from src.controllers.trip_updater import TripUpdater
 
 from src.controllers.link_creator import LinkCreator
 from src.controllers.link_finder import LinkFinder
@@ -48,6 +50,16 @@ def find_trip(tripId):
 
     return jsonify(response['body']), response['status_code']
 
+@trips_routes_bp.route("/trips/<tripId>", methods=["PATCH"])
+def update_trip_destination_date(tripId):
+    conn = db_connection_handler.get_connection()
+    trips_repository = TripsRepository(conn)
+    controller = TripUpdater(trips_repository)
+    
+    response = controller.update_trip_detail(request.json, tripId)
+
+    return jsonify(response['body']), response['status_code']
+
 @trips_routes_bp.route("/trips/<tripId>/confirm", methods=["GET"])
 def confirm_trip(tripId):
     conn = db_connection_handler.get_connection()
@@ -87,6 +99,14 @@ def invite_to_trip(tripId):
 
     response = controller.create(request.json, tripId)
 
+    if response['status_code'] == 201:
+        invite_details = request.json
+        print("Detalhes: ", invite_details)
+        participant_emails = invite_details.get('email', [])
+        print("Email: ", participant_emails)
+        email_body = f"Você foi convidado para a viagem!"
+        send_email(participant_emails, email_body)
+
     return jsonify(response['body']), response['status_code']
 
 @trips_routes_bp.route("/trips/<tripId>/activities", methods=["POST"])
@@ -123,7 +143,8 @@ def confirm_participant(participantsId):
 def get_trip_activities(tripId):
     conn = db_connection_handler.get_connection()
     activities_repository = ActivitiesRepository(conn)
-    controller = ActivityFinder(activities_repository)
+    trips_repository = TripsRepository(conn)
+    controller = ActivityFinder(activities_repository, trips_repository)
 
     response = controller.find(tripId)
 
