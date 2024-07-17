@@ -5,7 +5,9 @@ CREATE TABLE IF NOT EXISTS trips(
     end_date TIMESTAMP, 
     owner_name TEXT NOT NULL,
     owner_email TEXT NOT NULL,
-    status INTEGER
+    status INTEGER,
+    user_id TEXT,
+    FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
 CREATE TABLE IF NOT EXISTS emails_to_invite(
@@ -41,3 +43,8 @@ CREATE TABLE IF NOT EXISTS activities (
     FOREIGN KEY (trip_id) REFERENCES trips(id)
 );
 
+CREATE TABLE IF NOT EXISTS users (
+    id TEXT PRIMARY KEY,
+    email TEXT NOT NULL,
+    name TEXT NOT NULL
+);

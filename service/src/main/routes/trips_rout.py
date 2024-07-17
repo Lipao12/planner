@@ -4,6 +4,9 @@ from src.drivers.email_sender import send_email
 trips_routes_bp = Blueprint("trip_routes", __name__)
 
 # Imoportação de Controllers
+from src.controllers.user_creator import UserCreator
+from src.controllers.user_finder import UserFinder
+
 from src.controllers.trip_creator import TripCreator
 from src.controllers.trip_finder import TripFinder
 from src.controllers.trip_confirmer import TripConfirmer
@@ -20,6 +23,7 @@ from src.controllers.activity_creator import ActivityCreator
 from src.controllers.activity_finder import ActivityFinder
 
 # Importação de Repositorios
+from src.models.repositories.user_repository import UsersRepository
 from src.models.repositories.trips_repository import TripsRepository
 from src.models.repositories.emails_to_invite_repository import EmailToInviteRepository
 from src.models.repositories.links_repository import LinkRepository
@@ -29,12 +33,34 @@ from src.models.repositories.activities_repository import ActivitiesRepository
 # Importação o gerente de conexões
 from src.models.settings.db_connection_handler import db_connection_handler
 
+@trips_routes_bp.route("/register", methods=["POST"])
+def create_user():
+    conn = db_connection_handler.get_connection()
+    users_repository = UsersRepository(conn)
+    controller = UserCreator(users_repository=users_repository)
+
+    response = controller.create(request.json)
+
+    return jsonify(response['body']), response['status_code']
+
+@trips_routes_bp.route("/user/<userId>", methods=["GET"])
+def find_user(userId):
+    conn = db_connection_handler.get_connection()
+    users_repository = UsersRepository(conn)
+    controller = UserFinder(users_repository)
+
+    response = controller.find_user_detail(userId)
+
+    return jsonify(response['body']), response['status_code']
+
 @trips_routes_bp.route("/trips", methods=["POST"])
 def create_trip():
     conn = db_connection_handler.get_connection()
     trips_repository = TripsRepository(conn)
     emails_repository = EmailToInviteRepository(conn)
-    controller = TripCreator(trip_repository=trips_repository,email_repository=emails_repository)
+    participants_repository = ParticipantsRepository(conn)
+    controller = TripCreator(trip_repository=trips_repository,email_repository=emails_repository,
+                             participants_repository=participants_repository)
 
     response = controller.create(request.json)
 
@@ -67,6 +93,16 @@ def confirm_trip(tripId):
     controller = TripConfirmer(trips_repository)
 
     response = controller.confirm(tripId)
+
+    return jsonify(response['body']), response['status_code']
+
+@trips_routes_bp.route("/user/<userId>/trips", methods=["GET"])
+def get_user_trips(userId):
+    conn = db_connection_handler.get_connection()
+    trips_repository = TripsRepository(conn)
+    controller = TripFinder(trips_repository=trips_repository)
+
+    response = controller.find_trips_by_user_id(userId)
 
     return jsonify(response['body']), response['status_code']
 
