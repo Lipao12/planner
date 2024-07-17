@@ -100,8 +100,7 @@ export function UserTripsPage() {
             Adicionar viagem <Plus className="size-5" />
           </CustomButton>
           <div className="grid grid-cols-2 gap-5">
-            {trips &&
-              trips.length > 0 &&
+            {trips && trips.length > 0 ? (
               trips.map((trip: Trip) => {
                 return (
                   <button
@@ -121,7 +120,12 @@ export function UserTripsPage() {
                     </div>
                   </button>
                 );
-              })}
+              })
+            ) : (
+              <p className="text-zinc-500 text-sm">
+                Nenhuma viagem cadastrada.
+              </p>
+            )}
           </div>
         </div>
       </main>
