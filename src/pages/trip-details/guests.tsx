@@ -38,7 +38,7 @@ export function Guests({ openManageGuestsModal }: GuestsProps) {
             >
               <div className="space-y-1.5">
                 <span className="block font-medium text-zinc-100">
-                  {participant?.name ?? `Convidado ${index}`}
+                  {participant?.name ? participant.name : `Convidado ${index}`}
                 </span>
                 {/*O display block vai fazer com que ocupe a linha toda */}
                 <span className="block text-sm text-zinc-400 truncate ">
