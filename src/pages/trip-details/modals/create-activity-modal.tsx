@@ -31,7 +31,7 @@ export function CreateActivityModal({
     } finally {
       console.log("Finalizando requisição");
       //closeActivityModal();
-      window.document.location.reload(); // nao eh a melhor forma de mostrar quando uma atividade é criada e enviada pela API, procurar uma forma melhor
+      //window.document.location.reload(); // nao eh a melhor forma de mostrar quando uma atividade é criada e enviada pela API, procurar uma forma melhor
     }
   };
 

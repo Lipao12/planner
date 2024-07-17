@@ -36,6 +36,18 @@ class TripsRepository:
         trip = cursor.fetchone()
         return trip
     
+    def update_trip_destination_and_date(self, trip_id:str, destination:str, 
+                                         start_date:str, end_date:str)->None:
+        cursor = self.conn.cursor()
+        cursor.execute(
+            '''
+            UPDATE trips
+            SET destination = %s, start_date = %s, end_date = %s
+            WHERE id = %s
+            ''',(destination,start_date,end_date,trip_id)
+        )
+        self.conn.commit()
+    
     def update_trip_status(self, trip_id:str)->None:
         cursor = self.conn.cursor()
         cursor.execute(

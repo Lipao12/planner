@@ -25,31 +25,30 @@ export function CreateLinkModal({ closeLinkModal }: CreateLinkModalProps) {
 
     const data = new FormData(event.currentTarget);
     const title = data.get("title")?.toString() || "";
-    const url = data.get("link")?.toString() || "";
+    const link = data.get("link")?.toString() || "";
 
-    if (!title || !url) {
+    if (!title || !link) {
       console.log("Title ou Link estão vazios");
       return;
     }
 
-    if (!isValidUrl(url)) {
+    /*if (!isValidUrl(link)) {
       console.log("Formato da URL inválido");
       return;
-    }
+    }*/
 
     try {
       api.post(`/trips/${tripId}/links`, {
         title,
-        url,
+        link,
       });
       console.log("Link Postada");
     } catch (err: any) {
       console.log(err);
-      console.log(err.response.data.errors);
     } finally {
       console.log("Finalizando requisição");
       //closeActivityModal();
-      window.document.location.reload(); // nao eh a melhor forma de mostrar quando uma atividade é criada e enviada pela API, procurar uma forma melhor
+      //window.document.location.reload(); // nao eh a melhor forma de mostrar quando uma atividade é criada e enviada pela API, procurar uma forma melhor
     }
   };
 

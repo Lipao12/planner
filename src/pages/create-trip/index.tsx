@@ -89,16 +89,16 @@ export function CreateTripPage() {
     try {
       setLoading(true);
       const response = await api.post("/trips", {
-        destination,
-        starts_at: eventStartEndDate?.from,
-        ends_at: eventStartEndDate?.to,
+        destination: destination,
+        start_date: eventStartEndDate?.from,
+        end_date: eventStartEndDate?.to,
         emails_to_invite: emailsToInvite,
         owner_name: ownerName,
         owner_email: ownerEmail,
       });
-      const { tripId } = response.data;
-      api.get(`/trips/${tripId}/confirm`);
-      navigate(`/trips/${tripId}`);
+      const { id } = response.data;
+      api.get(`/trips/${id}/confirm`);
+      navigate(`/trips/${id}`);
     } catch (err: any) {
       console.error(err.response.data.message);
       console.error(err);
