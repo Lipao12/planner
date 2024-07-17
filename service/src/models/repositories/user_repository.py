@@ -11,14 +11,15 @@ class UsersRepository:
         cursor.execute(
             '''
             INSERT INTO users
-                (id, email, name)
+                (id, email, name, password)
             VALUES
-                (%s, %s, %s)
+                (%s, %s, %s, %s)
             ''',
             (
                 users_info["id"],
                 users_info["email"],
                 users_info["name"],
+                users_info["password"],
             )
         )
         self.conn.commit()
@@ -32,3 +33,16 @@ class UsersRepository:
         )
         trip = cursor.fetchone()
         return trip
+    
+    def login(self, email, password):
+        cursor = self.conn.cursor()
+        cursor.execute(
+            '''
+            SELECT id, password FROM users WHERE email = %s
+            ''', (email,)
+        )
+        user = cursor.fetchone()
+        print(user)
+        if user and user[1] == password:
+            return user[0]
+        return None

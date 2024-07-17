@@ -46,5 +46,6 @@ CREATE TABLE IF NOT EXISTS activities (
 CREATE TABLE IF NOT EXISTS users (
     id TEXT PRIMARY KEY,
     email TEXT NOT NULL,
-    name TEXT NOT NULL
+    name TEXT NOT NULL,
+    password TEXT NOT NULL
 );

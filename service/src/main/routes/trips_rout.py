@@ -6,6 +6,7 @@ trips_routes_bp = Blueprint("trip_routes", __name__)
 # Imoportação de Controllers
 from src.controllers.user_creator import UserCreator
 from src.controllers.user_finder import UserFinder
+from src.controllers.user_login import UserLogin
 
 from src.controllers.trip_creator import TripCreator
 from src.controllers.trip_finder import TripFinder
@@ -32,6 +33,16 @@ from src.models.repositories.activities_repository import ActivitiesRepository
 
 # Importação o gerente de conexões
 from src.models.settings.db_connection_handler import db_connection_handler
+
+@trips_routes_bp.route("/login", methods=["POST"])
+def login_user():
+    conn = db_connection_handler.get_connection()
+    users_repository = UsersRepository(conn)
+    controller = UserLogin(users_repository)
+
+    response = controller.login(request.json)
+
+    return jsonify(response['body']), response['status_code']
 
 @trips_routes_bp.route("/register", methods=["POST"])
 def create_user():
