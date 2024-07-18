@@ -11,9 +11,9 @@ Planner é uma aplicação web desenvolvida utilizando React, TypeScript e Pytho
   - TypeScript
 - **Backend:**
   - Python
-  - Flask (assumindo como framework backend)
+  - Flask 
 - **Banco de Dados:**
-  - (Especifique aqui o banco de dados utilizado, ex: PostgreSQL, MongoDB, etc.)
+  - PostgreSQL
 
 ## Funcionalidades
 
