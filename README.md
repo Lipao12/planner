@@ -46,6 +46,7 @@ Planner é uma aplicação web desenvolvida utilizando React, TypeScript e Pytho
 ### Todas as Viagens
 
 ![Todas as Viagens](https://drive.google.com/uc?id=1a7Yar36Em4OTJDSKooOkWz9G9hgSBJD1)
+![Todas as Viagens](https://drive.google.com/uc?id=1-dUj87ST-TNw2fQru8FdAt2jCRuaU_hU)
 
 ### Detalhes da Viagem
 
