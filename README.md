@@ -49,15 +49,15 @@ Planner é uma aplicação web desenvolvida utilizando React, TypeScript e Pytho
 
 ### Detalhes da Viagem
 
-![Detalhes da Viagem](https://drive.google.com/file/d/1-dUj87ST-TNw2fQru8FdAt2jCRuaU_hU/view)
+![Detalhes da Viagem](https://drive.google.com/uc?id=1-dUj87ST-TNw2fQru8FdAt2jCRuaU_hU)
 
 ### Criar Viagem
 
 ![Criar Viagem](https://drive.google.com/uc?id=1u79Hjsr2IUpe6jHoRfEz6pnWLhGOu-x_)
+
 ## A Ser Feito
 
 - **Segurança de Senhas:**
   - Implementar hash e salting para as senhas dos usuários durante a criação de contas.
 - **Atualização Dinâmica da Página:**
   - Melhorar a maneira de atualizar a página para incluir atividades, links e convidados sem a necessidade de recarregar a página.
-
