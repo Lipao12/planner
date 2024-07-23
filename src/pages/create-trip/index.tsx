@@ -1,6 +1,6 @@
 import { FormEvent, useState } from "react";
 import { DateRange } from "react-day-picker";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { api } from "../../lib/axios";
 import { ConfitmTripModal } from "./modals/confirm-trip-modal";
 import { InviteGuestsModal } from "./modals/invite-guests-modal";
@@ -8,6 +8,8 @@ import { DestinationDateStep } from "./steps/destination-date-step";
 import { InviteGuestsStep } from "./steps/invite-guests-step";
 
 export function CreateTripPage() {
+  const { userId } = useParams();
+  console.log(userId);
   const navigate = useNavigate();
   const [isGuestsInputOpen, setIsGuestsInputOpen] = useState(false);
   const [isGuestsModalOpen, setIsGuestsModalOpen] = useState(false);
@@ -89,18 +91,19 @@ export function CreateTripPage() {
     try {
       setLoading(true);
       const response = await api.post("/trips", {
-        destination,
-        starts_at: eventStartEndDate?.from,
-        ends_at: eventStartEndDate?.to,
+        destination: destination,
+        start_date: eventStartEndDate?.from,
+        end_date: eventStartEndDate?.to,
         emails_to_invite: emailsToInvite,
         owner_name: ownerName,
         owner_email: ownerEmail,
+        user_id: userId,
       });
-      const { tripId } = response.data;
-      api.get(`/trips/${tripId}/confirm`);
-      navigate(`/trips/${tripId}`);
+      const { id } = response.data;
+      api.get(`/trips/${id}/confirm`);
+      navigate(`/user/${userId}/trips/${id}`);
     } catch (err: any) {
-      console.error(err.response.data.message);
+      //console.error(err.response.data.message);
       console.error(err);
     } finally {
       setLoading(false);

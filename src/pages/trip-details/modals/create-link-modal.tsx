@@ -1,5 +1,5 @@
 import { Link2, Tag, X } from "lucide-react";
-import { FormEvent } from "react";
+import { FormEvent, useState } from "react";
 import { useParams } from "react-router-dom";
 import { api } from "../../../lib/axios";
 import { CustomButton } from "../../../ui/componets/CustomButton";
@@ -10,6 +10,7 @@ interface CreateLinkModalProps {
 
 export function CreateLinkModal({ closeLinkModal }: CreateLinkModalProps) {
   const { tripId } = useParams();
+  const [error, setError] = useState("");
 
   function isValidUrl(string: string): boolean {
     try {
@@ -25,31 +26,32 @@ export function CreateLinkModal({ closeLinkModal }: CreateLinkModalProps) {
 
     const data = new FormData(event.currentTarget);
     const title = data.get("title")?.toString() || "";
-    const url = data.get("link")?.toString() || "";
+    const link = data.get("link")?.toString() || "";
 
-    if (!title || !url) {
+    if (!title || !link) {
       console.log("Title ou Link estão vazios");
+      setError("Titulo ou link não preenchidos.");
       return;
     }
 
-    if (!isValidUrl(url)) {
+    /*if (!isValidUrl(link)) {
       console.log("Formato da URL inválido");
       return;
-    }
+    }*/
 
     try {
       api.post(`/trips/${tripId}/links`, {
         title,
-        url,
+        link,
       });
       console.log("Link Postada");
+      setError("");
     } catch (err: any) {
       console.log(err);
-      console.log(err.response.data.errors);
     } finally {
       console.log("Finalizando requisição");
       //closeActivityModal();
-      window.document.location.reload(); // nao eh a melhor forma de mostrar quando uma atividade é criada e enviada pela API, procurar uma forma melhor
+      //window.document.location.reload(); // nao eh a melhor forma de mostrar quando uma atividade é criada e enviada pela API, procurar uma forma melhor
     }
   };
 
@@ -96,6 +98,7 @@ export function CreateLinkModal({ closeLinkModal }: CreateLinkModalProps) {
               className="bg-transparent text-lg placeholder-zinc-400 outline-none flex-1 [color-scheme:dark]"
             />
           </div>
+          {error && <p className="text-red-500 text-sm">{error}</p>}
           <CustomButton size="full">Salvar link</CustomButton>
         </form>
       </div>

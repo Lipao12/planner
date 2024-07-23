@@ -1,5 +1,7 @@
-import { Plus } from "lucide-react";
+import { ArrowLeft, Plus } from "lucide-react";
 import { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { CustomButton } from "../../ui/componets/CustomButton";
 import { Activities } from "./activities";
 import { DestinationDateHeader } from "./dest-and-date-header";
 import { Guests } from "./guests";
@@ -9,6 +11,8 @@ import { CreateLinkModal } from "./modals/create-link-modal";
 import { ManageGuestsModal } from "./modals/manage-guests-modal";
 
 export function TripDetailsPage() {
+  const { userId } = useParams();
+  const navigate = useNavigate();
   const [isCreateActivityModalOpen, setCreateActivityModalOpen] =
     useState(false);
   const [isCreateLinkModalOpen, setIsCreateLinkModalOpen] = useState(false);
@@ -47,10 +51,24 @@ export function TripDetailsPage() {
     setIsChangeDateAble(false);
   };
 
-  console.log("Create Link: ", isCreateLinkModalOpen);
+  console.log(userId);
+
+  const backTravels = () => {
+    try {
+      navigate(`/user/${userId}`); // `/user/${userId}/trips/${tripId}`
+    } catch (err: any) {
+      //console.error(err.response.data.message);
+      console.error(err);
+    }
+  };
 
   return (
     <div className="max-w-6xl px-6 py-10 mx-auto space-y-8">
+      <CustomButton onClick={backTravels}>
+        <ArrowLeft className="size-5" />
+        Minhas viajens
+      </CustomButton>
+
       <DestinationDateHeader
         isChangeDateAble={isChangeDateAble}
         ableChangeDate={ableChangeDate}
